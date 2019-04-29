@@ -1,19 +1,26 @@
-// this is needed for exporting express js into our application
+// index.js serves as entry point for application
+
 const express = require('express');
-
-// importing appConfig in index.js
-
 const appConfig = require('./config/appConfig');
+const fs = require('fs');
 
-// declaring instance of an application
 const app = express();
-// 
-let helloWorldFunction = ( req, res ) => res.send("Hello World\n");
+
+let routesPath = './routes';
+fs.readdirSync(routesPath).forEach(function(file){
+
+if(~file.indexOf('.js')) {
+   
+    console.log("Including the following file:");
+    console.log(routesPath + '/' + file);
+   
+    let route = require(routesPath + '/' + file);
+    route.setRouter(app); 
+}
+
+});
 
 
-app.get('/hello',helloWorldFunction);
-
-// listening the server >> creating a local server
 
 app.listen(appConfig.port, () => console.log("The Application is running at http:/127.0.0.1:3000/")); 
  
