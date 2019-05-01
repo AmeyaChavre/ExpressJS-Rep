@@ -5,15 +5,15 @@ appConfig.port = 3000;
 appConfig.allowedCorsOrigin = "*";
 appConfig.env = "dev";
 appConfig.db = {
-    uri: 'mongodb://test:test@127.0.0.1:27017/blogAppDB',
+    uri: 'mongodb://127.0.0.1:27017/blogAppDB',
 }
-appConfig.apiVersion = "/api/v1";
+appConfig.apiVersion = '/api/v1';
 // to include this in application
 module.exports = {
 
     port: appConfig.port, 
     allowedCorsOrigin: appConfig.allowedCorsOrigin, 
-    appConfig: appConfig.env,
+    environment: appConfig.env,
     db: appConfig.db,
     apiVersion: appConfig.apiVersion 
 
