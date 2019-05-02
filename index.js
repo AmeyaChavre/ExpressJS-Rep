@@ -1,60 +1,77 @@
-// index.js serves as entry point for application
-
+// this is needed for importing expressjs into our application
 const express = require('express')
 const appConfig = require('./config/appConfig')
 const fs = require('fs')
 const mongoose = require('mongoose')
+const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser')
+
+//declaring an instance or creating an application instance
 const app = express()
 
-let routesPath = './routes';
-fs.readdirSync(routesPath).forEach(function(file){
+//middlewares
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(cookieParser())
 
-if(~file.indexOf('.js')) {
-   
-    console.log("Including the following file:");
-    console.log(routesPath + '/' + file);
-   
-    let route = require(routesPath + '/' + file);
-    route.setRouter(app); 
-}
 
-}); // end bootstrap code
 
-let modelsPath = './models';
-// bootstrap models
-fs.readdirSync(modelsPath).forEach(function(file){
 
-    if(~file.indexOf('.js')) require(modelsPath + '/' + file)
-    
-    }); // end bootstraping models
+// Bootstrap models
+let modelsPath = './models'
+fs.readdirSync(modelsPath).forEach(function (file) {
+    if (~file.indexOf('.js')) {
+        console.log(file)
+        require(modelsPath + '/' + file)
+    }
+  })
+  // end Bootstrap models
 
-// listening to the server - creating a local server
+
+// Bootstrap route
+let routesPath = './routes'
+fs.readdirSync(routesPath).forEach(function (file) {
+    if (~file.indexOf('.js')) {
+        console.log("including the following file");
+        console.log(routesPath + '/' + file)
+        let route = require(routesPath + '/' + file);
+        route.setRouter(app);
+    }
+});
+// end bootstrap route
+
+
+
+//listening the server - creating a local server
 app.listen(appConfig.port, () => {
-    console.log("The Application is running at http:/127.0.0.1:3000/");
-    // creating the mongo db connection here
-    let db = mongoose.connect(appConfig.db.uri,{ useMongoClient : true }); 
+    console.log('Example app listening on port 3000!');
+    //creating the mongo db connection here
+    let db = mongoose.connect(appConfig.db.uri, { useMongoClient: true });
+
 })
 
+
 // handling mongoose connection error
-mongoose.connection.on("error",function(err){
-    console.log("******************************************");
+mongoose.connection.on('error', function (err) {
+    console.log("************************************");
     console.log('FAILED : DATABASE CONNECTION ERROR!!');
-    console.log("******************************************");
-    console.log(err);
-}); //  end mongoose connection error
+    console.log("************************************");
+    console.log(err)
+
+}); // end mongoose connection error
 
 // handling mongoose success event
-mongoose.connection.on("open",function(err){
-    if(err){
-        console.log("******************************************");
-        console.log("FAILED : DATABASE CONNECTION OPEN FAILED!!");
-        console.log("******************************************");
+mongoose.connection.on('open', function (err) {
+    if (err) {
+        console.log("****************************************");
+        console.log("FAILED : DATABASE CONNECTON OPEN ERROR!!");
+        console.log("****************************************");
         console.log(err);
-    }else{
-        console.log("******************************************");
+
+    } else {
+        console.log("********************************************");
         console.log("SUCCESS : DATABASE CONNECTION OPEN SUCCESS!!");
-        console.log("******************************************");
+        console.log("********************************************");
     }
+
 }); // end mongoose connection open handler
-
-

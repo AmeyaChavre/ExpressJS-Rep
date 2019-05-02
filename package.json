@@ -9,7 +9,9 @@
   "author": "Ameya Chavre",
   "license": "ISC",
   "dependencies": {
+    "cookie-parser": "^1.4.4",
     "express": "^4.16.4",
-    "mongoose": "^5.5.5"
+    "mongoose": "^5.5.5",
+    "shortid": "^2.2.14"
   }
 }

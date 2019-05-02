@@ -1,6 +1,6 @@
 // importing mongoose module
-const mongoose = require('mongoose');
-// import Schema
+const mongoose = require('mongoose')
+// import schema 
 const Schema = mongoose.Schema;
 
 let blogSchema = new Schema(
@@ -38,15 +38,16 @@ let blogSchema = new Schema(
             default: ''
         },
         tags: [],
+
         created: {
             type: Date,
             default: Date.now
-        },
+        }, 
+
         lastModified: {
             type: Date,
             default: Date.now
         }
-
     }
 )
 
