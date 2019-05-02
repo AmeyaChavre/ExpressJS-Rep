@@ -36,18 +36,24 @@ app.listen(appConfig.port, () => {
 })
 
 // handling mongoose connection error
-mongoose.connection.on('error',function(err){
-    console.log('database connection error');
+mongoose.connection.on("error",function(err){
+    console.log("******************************************");
+    console.log('FAILED : DATABASE CONNECTION ERROR!!');
+    console.log("******************************************");
     console.log(err);
 }); //  end mongoose connection error
 
 // handling mongoose success event
-mongoose.connection.on('open',function(err){
+mongoose.connection.on("open",function(err){
     if(err){
-        console.log("database error");
+        console.log("******************************************");
+        console.log("FAILED : DATABASE CONNECTION OPEN FAILED!!");
+        console.log("******************************************");
         console.log(err);
     }else{
-        console.log("database connection open success");
+        console.log("******************************************");
+        console.log("SUCCESS : DATABASE CONNECTION OPEN SUCCESS!!");
+        console.log("******************************************");
     }
 }); // end mongoose connection open handler
 
